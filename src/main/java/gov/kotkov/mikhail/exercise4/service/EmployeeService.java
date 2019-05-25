@@ -1,5 +1,7 @@
 package gov.kotkov.mikhail.exercise4.service;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +31,10 @@ public class EmployeeService {
 
 	public Employee find(long employeeId) {
 		return employeeRepository.findOne(employeeId);
+	}
+	
+	public List<Employee> find(List<Long> ids) {
+		return employeeRepository.findAll(ids);
 	}
 
 	@Transactional

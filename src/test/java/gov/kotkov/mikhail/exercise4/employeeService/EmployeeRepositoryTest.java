@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -27,7 +28,7 @@ import gov.kotkov.mikhail.exercise4.repository.EmployeeRepository;
   classes = { DataConfig.class }, 
   loader = AnnotationConfigContextLoader.class)
 @Transactional
-public class EmployeeServiceTest {
+public class EmployeeRepositoryTest {
      
     @Resource
     private EmployeeRepository employeeRepository;
@@ -63,8 +64,10 @@ public class EmployeeServiceTest {
     	testEmployee2.setLastName("Bashirov");
     	testEmployee2.setWageRate(new BigDecimal(400));
     	testEmployee2.setActualWorkhours(160);
-    	employeeRepository.save(Arrays.asList(testEmployee, testEmployee2));
-    	assertEquals(2, employeeRepository.count());
+    	List<Employee> employees = Arrays.asList(testEmployee, testEmployee2);
+    	employeeRepository.save(employees);
+    	List<Employee> result = employeeRepository.findAll(Arrays.asList(testEmployee.getId(), testEmployee2.getId()));
+    	assertEquals(employees, result);
     }
     
 }

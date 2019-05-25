@@ -7,8 +7,6 @@ import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +24,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
-import gov.kotkov.mikhail.exercise4.util.Job;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -57,10 +54,6 @@ public abstract class Employee {
 	@Size(max = 20)
 	private String lastName;
 	
-	@Enumerated(EnumType.STRING)
-	@Column
-	private Job job;
-	
 	//wage for standard hours worked
 	@Column(name = "wage_rate", nullable = false)
 	@NotNull
@@ -81,13 +74,12 @@ public abstract class Employee {
 	private static int standardWorkhours;
 	
 	public void setWageRate(BigDecimal wageRate) {
-		if(wageRate.signum() == -1) {
-			throw new IllegalArgumentException("wage rate can't be negative");
-		}
 		this.wageRate = wageRate.setScale(2, RoundingMode.HALF_UP);
 	}
 	
 	public double getWorkhoursPercentage() {
 		return ((double)actualWorkhours/standardWorkhours) * 100;
 	}
+
+	public abstract BigDecimal calculateSalary();
 }
