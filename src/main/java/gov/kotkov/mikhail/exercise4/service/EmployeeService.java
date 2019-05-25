@@ -20,7 +20,7 @@ public class EmployeeService {
 		this.employeeRepository = employeeRepository;
 	}
 	
-	public Iterable<Employee> findAll() {
+	public List<Employee> findAll() {
 		return employeeRepository.findAll();
 	}
 
