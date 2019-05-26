@@ -2,8 +2,6 @@ package gov.kotkov.mikhail.exercise4.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +23,13 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public Employee save(@Valid Employee employee) {
+	public Employee save(Employee employee) {
 		return employeeRepository.save(employee);
+	}
+	
+	@Transactional
+	public List<Employee> save(List<Employee> employees) {
+		return employeeRepository.save(employees);
 	}
 
 	public Employee find(long employeeId) {
